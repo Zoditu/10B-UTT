@@ -1,0 +1,12 @@
+{ 
+    "mongo": {
+        "dev": {
+            "host": "mongodb://127.0.0.1:27017",
+            "defaultDB": "UTT"
+        },
+        "production": {
+            "host": "atlas",
+            "defaultDB": "UTT"
+        }
+    }
+}
