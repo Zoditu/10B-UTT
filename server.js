@@ -6,6 +6,12 @@ app.use(express.json());
 
 let entorno = constants.ENVIRONMENTS.production;
 const args = process.argv;
+
+if (args.length <= 2) {
+    console.log('Parametro --entorno es requerido');
+    process.exit(1);
+}
+
 args.forEach(argument => {
     const arg = argument.toLowerCase();
     if(arg.startsWith("--entorno=")){
@@ -43,17 +49,20 @@ const PORT = constants.PORTS[entorno];
 app.listen(PORT, function(error) {
     if(error) {
         console.log(error);
-        process.exit(0);
+        process.exit(1);
     }
 
-    console.log(`Ejecutando en el puerto: ${PORT}`);
+    console.log(`Ejecutando servidor en el puerto: ${PORT}`);
     const mongoose = require('mongoose');
 
     const mongoURL = `${config.mongo[entorno].host}/${config.mongo[entorno].defaultDB}`;
-    mongoose.connect(mongoURL).then(() => {
-        console.log('Connected: ' + mongoURL);
-    }).catch(error => {
-        console.error(error);
-        process.exit(0);
-    });
+    mongoose
+        .connect(mongoURL)
+        .then(() => {
+            console.log('Connected: ' + mongoURL);
+        })
+        .catch(error => {
+            console.error(error);
+            process.exit(1);
+        });
 });

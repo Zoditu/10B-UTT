@@ -1,0 +1,15 @@
+FROM alpine AS linux
+
+RUN apk add --no-cache git
+
+RUN git clone https://github.com/METR1CKA/repo-docker-10b.git /repo
+
+FROM ubuntu:latest AS ubuntu-linux
+
+RUN apt-get -y update && apt-get -y install curl
+
+RUN mkdir /repo2
+
+COPY --from=linux /repo/file.txt /repo2/
+
+CMD ["/bin/bash"]
