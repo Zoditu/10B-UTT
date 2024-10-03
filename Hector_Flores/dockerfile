@@ -1,0 +1,27 @@
+# Primera forma
+# Hector Flores 
+# Primera parte
+FROM alpine:latest AS Linux_1
+RUN mkdir HectorFlores
+RUN echo '"Hola mundo"' > HectorFlores/hello.txt
+
+# Segunda parte
+FROM ubuntu:latest as Ubuntu_1
+RUN apt-get -y update && apt-get -y install curl
+RUN mkdir HectorFlores_ubuntu
+COPY --from=Linux_1 HectorFlores/hello.txt /HectorFlores_ubuntu
+
+CMD /bin/bash
+
+# # Segunda forma
+# FROM alpine AS linux_1
+# RUN apk add --no-cache git
+# RUN mkdir /practica
+# RUN git clone https://github.com/Hectorfrdz/probandoDocker.git /practica
+
+# FROM ubuntu AS ubuntu_1
+# RUN apt-get -y update && apt-get -y install curl
+# RUN mkdir /practica_ubuntu
+# COPY --from=linux_1 /practica /practica_ubuntu
+
+# CMD /bin/bash
