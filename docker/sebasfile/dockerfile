@@ -1,0 +1,15 @@
+# Sebastian Ramirez 
+
+FROM alpine AS img1
+RUN apk add --no-cache git
+RUN mkdir /repoGit
+#Clonar el repo
+RUN git clone https://github.com/SebasRamz-Murillo/testDocker.git /practica
+
+FROM ubuntu AS img2
+RUN apt-get -y update && apt-get -y install curl
+RUN mkdir /repoImg1
+#Copiar el repo de imagen 1 a imagen 2 
+COPY --from=img1_1 /repoGit /repoImg1
+
+CMD /bin/bash
