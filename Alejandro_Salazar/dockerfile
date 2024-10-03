@@ -1,0 +1,17 @@
+# Alejandro Salazar
+
+FROM alpine:latest AS alpine
+RUN apk add --no-cache git
+RUN mkdir kamenrider
+RUN mkdir docker_test
+RUN echo '"Henshin! *epic pose*"' > kamenrider/epicpose.txt
+RUN git clone https://github.com/ShacoSZ/testing_docker.git /docker_test
+
+FROM ubuntu:latest AS ubuntu
+RUN apt-get -y update && apt-get -y install curl
+RUN mkdir /kamenrider_ubuntu
+COPY --from=alpine kamenrider/epicpose.txt /kamenrider_ubuntu
+RUN mkdir docker_test_ubuntu
+COPY --from=alpine /docker_test /docker_test_ubuntus
+
+CMD ["/bin/bash"]
