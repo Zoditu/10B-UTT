@@ -1,6 +1,8 @@
 FROM alpine AS primerLinux
 RUN mkdir 10B
 RUN echo "Hola 10B" > 10B/hola.txt
+RUN apk update && apk add --no-cache git
+RUN git clone -b main https://github.com/Zoditu/10B-UTT.git
 
 FROM ubuntu:latest as miUbuntu
 RUN apt-get -y update; apt-get -y install curl
@@ -13,5 +15,7 @@ COPY Mathematics.js /proyecto_node
 COPY pruebas.test.js /proyecto_node
 RUN cd /proyecto_node && npm init --yes
 RUN cd /proyecto_node && npm install jest@latest
+COPY --from=primerLinux 10B-UTT/ /repo
+RUN cd /repo && npm install
 
 CMD /bin/bash
