@@ -3,6 +3,9 @@ const constants = require('./app/utils/constants');
 const config = require('./config.json');
 const app = express();
 app.use(express.json());
+app.use(express.static(
+    __dirname + '/app/public')
+);
 
 let entorno = constants.ENVIRONMENTS.production;
 const args = process.argv;
@@ -15,29 +18,8 @@ args.forEach(argument => {
     }
 });
 
-app.post('/escuela', async (req, res) => {
-    const body = req.body || {};
-    const validate = require('./validation/escuela.validate');
-    const escuelaValida = validate.nuevaEscuela(body);
-
-    if(escuelaValida.error) {
-        return res.status(400).send(escuelaValida.error);
-    }
-
-    const Escuela = require('./app/models/Escuela');
-    const nuevaEscuela = new Escuela(body);
-    await nuevaEscuela.save();
-
-    res.send({
-        ok: true
-    });
-});
-
-app.get('/escuelas', async (req, res) => {
-    const Escuela = require('./app/models/Escuela');
-    const escuelas = await Escuela.find();
-    res.send(escuelas);
-});
+const escuelasRouter = require('./app/routers/escuela');
+app.use('/escuela', escuelasRouter);
 
 const PORT = constants.PORTS[entorno];
 app.listen(PORT, function(error) {
