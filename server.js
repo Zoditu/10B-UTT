@@ -1,7 +1,6 @@
 const express = require('express')
 const constants = require('./app/utils/constants')
 const config = require('./config.json')
-
 const app = express()
 app.use(express.json())
 
@@ -24,7 +23,7 @@ args.forEach((argument) => {
 })
 
 app.post('/escuela', async (req, res) => {
-    const body = req.body ?? {}
+    const body = req.body || {}
     const validate = require('./validation/escuela.validate')
     const escuelaValida = validate.nuevaEscuela(body)
 

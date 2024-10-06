@@ -9,7 +9,14 @@ const PORTS = {
     production: 5681 
 };
 
+const URLS = {
+    dev: "http://localhost:2024",
+    local: "http://localhost:2024",
+    production: ""
+};
+
 module.exports = {
     ENVIRONMENTS: ENVIRONMENTS,
-    PORTS: PORTS
+    PORTS: PORTS,
+    URLS: URLS
 };

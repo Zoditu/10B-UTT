@@ -13,6 +13,16 @@
             ],
             "args": ["--entorno=dev"],
             "program": "${workspaceFolder}\\server.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Unit Test",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "npx",
+            "args": ["jest", "escuelas.api"],
         }
     ]
 }
