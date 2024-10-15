@@ -12,6 +12,6 @@ RUN apt-get -y update && apt-get -y install curl
 RUN mkdir /kamenrider_ubuntu
 COPY --from=alpine kamenrider/epicpose.txt /kamenrider_ubuntu
 RUN mkdir docker_test_ubuntu
-COPY --from=alpine /docker_test /docker_test_ubuntus
+COPY --from=alpine /docker_test /docker_test_ubuntu
 
 CMD ["/bin/bash"]
