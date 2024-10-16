@@ -22,7 +22,7 @@
                 "<node_internals>/**"
             ],
             "runtimeExecutable": "npx",
-            "args": ["jest", "escuelas.api"],
+            "args": ["jest", "escuelas.ui"],
         }
     ]
 }

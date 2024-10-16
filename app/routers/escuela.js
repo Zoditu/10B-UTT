@@ -62,6 +62,11 @@ router.delete('/:clave_registro', async (req, res) => {
     res.send({
         ok: true
     });
-})
+});
+
+router.get('/clear', async (req, res) => {
+    await Escuela.deleteMany({});
+    res.send({ok: true});
+});
 
 module.exports = router;
