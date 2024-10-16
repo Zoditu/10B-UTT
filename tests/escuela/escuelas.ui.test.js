@@ -23,13 +23,15 @@ describe('Probar feature de escuelas', async function() {
 
     before(async function() {
         driver = await new Builder().forBrowser(Browser.CHROME)
-        .setChromeOptions(new chrome.Options().addArguments('--headless=new', '--headless'))
+        .setChromeOptions(new chrome.Options()/*.addArguments('--headless=new', '--headless')*/)
         .build();
         
         await driver.get('http://localhost:2024/escuelas');   
     });
 
     it('Se puede crear una escuela', async () => {
+
+        await esperarLoader(driver);
     
         const escuela = {
             "nombre": "Universidad Tecnológica de Torreón",
@@ -48,13 +50,13 @@ describe('Probar feature de escuelas', async function() {
     
         const submit = await driver.findElement(By.xpath('//button[@type="submit"]'))
         await submit.click();
+
+        await esperarLoader(driver);
     
         const mensaje = await driver.findElement(By.xpath('//div[@role="alert"]'));
         let textoMensaje = await mensaje.getText();
     
         expect(textoMensaje).to.equal('Se creó la escuela :D');
-    
-        await esperarLoader();
     
         const listaEscuela = await driver.findElements(By.xpath('//li'));
         for (let i = 0; i < listaEscuela.length; i++) {
@@ -65,6 +67,7 @@ describe('Probar feature de escuelas', async function() {
             if(datosEscuela === nombreEscuela) {
                 const botonEliminar = await _escuela.findElement(By.xpath('//span'));
                 await botonEliminar.click();
+                await esperarLoader(driver);
                 break;
             }
         }

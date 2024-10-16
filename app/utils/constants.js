@@ -6,13 +6,13 @@ const ENVIRONMENTS = {
 
 const PORTS = {
     local: 2024,
-    production: 5681 
+    production: 2024 
 };
 
 const URLS = {
     dev: "http://localhost:2024",
     local: "http://localhost:2024",
-    production: ""
+    production: "http://localhost:2024"
 };
 
 module.exports = {

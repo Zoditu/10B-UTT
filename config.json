@@ -2,10 +2,12 @@
     "mongo": {
         "local": {
             "host": "mongodb://127.0.0.1:27017",
+            "params": false,
             "defaultDB": "UTT"
         },
         "production": {
-            "host": "atlas",
+            "host": "mongodb+srv://10B:utt10B@cluster0.6i37a.mongodb.net",
+            "params": "?retryWrites=true&w=majority&appName=Cluster0",
             "defaultDB": "UTT10B"
         }
     }
