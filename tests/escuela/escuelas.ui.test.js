@@ -23,7 +23,7 @@ describe('Probar feature de escuelas', async function() {
 
     before(async function() {
         driver = await new Builder().forBrowser(Browser.CHROME)
-        .setChromeOptions(new chrome.Options()/*.addArguments('--headless=new', '--headless')*/)
+        .setChromeOptions(new chrome.Options().addArguments('--headless=new', '--headless', '--no-sandbox'))
         .build();
         
         await driver.get('http://localhost:2024/escuelas');   
