@@ -25,6 +25,11 @@ describe('Probar feature de escuelas', async function() {
         driver = await new Builder().forBrowser(Browser.CHROME)
         .setChromeOptions(new chrome.Options().addArguments('--headless=new', '--headless', '--no-sandbox', '--window-size=1920x1080'))
         .build();
+
+        await driver.manage().window().setSize({
+            width: 1920,
+            height: 1080
+        });
         
         await driver.get('http://localhost:2024/escuelas');   
     });
@@ -66,6 +71,7 @@ describe('Probar feature de escuelas', async function() {
             nombreEscuela = nombreEscuela.replace('delete\n', '');
             if(datosEscuela === nombreEscuela) {
                 const botonEliminar = await _escuela.findElement(By.xpath('//span'));
+                driver.executeScript('arguments[0].scrollIntoView();', _escuela);
                 await botonEliminar.click();
                 await esperarLoader(driver);
                 break;
