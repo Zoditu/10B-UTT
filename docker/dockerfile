@@ -25,5 +25,5 @@ RUN cd /repo && npm install
 RUN cd /repo && npm install chromedriver@latest
 RUN npm install -g mocha@latest
 RUN npm install -g mochawesome@latest
-#CMD node /repo/server & mocha --timeout 30000 --reporter mochawesome /repo/tests/escuela/escuelas.ui.test.js
-CMD /bin/bash
+CMD node /repo/server & mocha --timeout 30000 --reporter mochawesome /repo/tests/escuela/escuelas.ui.test.js
+#CMD /bin/bash
