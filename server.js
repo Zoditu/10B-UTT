@@ -31,7 +31,11 @@ app.listen(PORT, function(error) {
     console.log(`Ejecutando en el puerto: ${PORT}`);
     const mongoose = require('mongoose');
 
-    const mongoURL = `${config.mongo[entorno].host}/${config.mongo[entorno].defaultDB}`;
+    let mongoURL = `${config.mongo[entorno].host}/${config.mongo[entorno].defaultDB}`;
+    if(config.mongo[entorno].params) {
+        mongoURL += config.mongo[entorno].params;
+    }
+
     mongoose.connect(mongoURL).then(() => {
         console.log('Connected: ' + mongoURL);
     }).catch(error => {
