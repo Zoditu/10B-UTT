@@ -1,0 +1,72 @@
+//Correr todas las pruebas de manera local en el servidor
+def iniciarMongo
+def iniciarServicio
+def pruebasUI
+def pruebasComponentes
+def pruebasAPI
+
+pipeline {
+    agent any
+    environment {
+        //REPO_PATH='/home/manish/Desktop'
+        APP_NAME='test'
+    }
+    stages {
+        stage('Cargar funciones') {
+            steps {
+                script {
+                    iniciarMongo = bat( label: '', returnStdout: true, script: 'start cmd /k "C:\\MongoDB\\bin\\mongod.exe"')
+                    iniciarServicio = bat( label: '', returnStdout: true, script: 'start cmd /k "node C:\\Users\\Admin\\Desktop\\Repositorio\\server.js --entorno=dev"')
+                    //echo bat(label: '', returnStdout: true, script: 'npm install -g mocha & npm install -g mochawesome')
+                    pruebasUI = bat(label: '', returnStdout: true, script: 'cd C:\\Users\\Admin\\Desktop\\Repositorio & C:\\Users\\Admin\\AppData\\Roaming\\npm\\mocha --timeout 60000 --reporter mochawesome "tests\\escuela\\escuelas.ui.test.js"')
+                    pruebasAPI = bat(label: '', returnStdout: true, script: 'cd C:\\Users\\Admin\\Desktop\\Repositorio & npx jest escuelas.api')
+                    pruebasComponentes = bat(label: '', returnStdout: true, script: 'cd C:\\Users\\Admin\\Desktop\\Repositorio & npx jest nuevaEscuela')
+                }
+            }
+        }
+        stage('Mostrar logs') {
+            steps {
+                script {
+                    echo iniciarMongo
+                    echo iniciarServicio
+                    echo pruebasUI
+                    echo pruebasAPI
+                    echo pruebasComponentes
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+//Correr a través de docker
+def dockerTest
+
+pipeline {
+    agent any
+    environment {
+        //REPO_PATH='/home/manish/Desktop'
+        APP_NAME='test'
+    }
+    stages {
+        stage('Cargar funciones') {
+            steps {
+                script {
+                    dockerTest = bat( label: '', returnStdout: true, script: 'cd C:\\Users\\Admin\\Desktop\\Repositorio\\server.js\\docker & start automatizacion.bat')
+                }
+            }
+        }
+        stage('Mostrar logs') {
+            steps {
+                script {
+                    echo dockerTest
+                }
+            }
+        }
+    }
+}
