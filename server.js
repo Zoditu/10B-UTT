@@ -2,7 +2,9 @@ const express = require('express');
 const constants = require('./app/utils/constants');
 const config = require('./config.json');
 const app = express();
+const expressip = require('express-ip');
 app.use(express.json());
+app.use(expressip().getIpInfoMiddleware);
 app.use(express.static(
     __dirname + '/app/public')
 );
@@ -19,7 +21,18 @@ args.forEach(argument => {
 });
 
 const escuelasRouter = require('./app/routers/escuela');
+const Log = require('./app/models/Log');
+const Backup = require('./app/models/Backup');
 app.use('/escuela', escuelasRouter);
+app.use('/logs', async (req, res) => {
+    const logs = await Log.find({});
+    res.send(logs);
+});
+
+app.use('/backups', async (req, res) => {
+    const backups = await Backup.find({});
+    res.send(backups);
+});
 
 const PORT = constants.PORTS[entorno];
 app.listen(PORT, function(error) {
