@@ -6,6 +6,17 @@ const Log = require('../models/Log');
 
 const MAX_PAGING = 3;
 
+/**
+ * La función x hace la suma de dos números
+ * @param {Number} a Un número entero
+ * @param {Number} b Otro número entero
+ * 
+ * @returns La suma entera de ambos números
+ */
+function x(a, b) {
+
+}
+
 router.post('/new', async (req, res) => {
     const body = req.body || {};
     const validate = require('../../validation/escuela.validate');
@@ -74,18 +85,20 @@ router.get('/all', async (req, res) => {
     const escuelas = await Escuela.find(filter);
     let result = [];
     let max = MAX_PAGING;
+    let page = query.page;
+    page = page < 1 ? 1 : Math.floor(page);
 
-    if(query.i) {
+    if(page) {
 
         if(!isNaN(query.max)) {
             max = query.max < max ? parseInt(query.max) : max;
         }
 
-        if(!isNaN(query.i)) {
-            query.i = parseInt(query.i);
+        if(!isNaN(page)) {
+            page = parseInt(page);
         }
 
-        for(let i = query.i; i < (query.i + max) && i < escuelas.length; i++) {
+        for(let i = 0 + ((page - 1) * max); i < (page * max) && i < escuelas.length; i++) {
             result.push(escuelas[i]);
         }
     } else {
